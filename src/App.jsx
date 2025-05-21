@@ -1,16 +1,13 @@
 
+import React from 'react'
+import"./App.css"
+import Card from './Components/Card/Card'
 
-
-import './App.css'
-
-function App() {
-
-
+const App = () => {
   return (
-   <div className=' size-full'>
-    <h1 className='text-amber-600'>hello from react whit vite</h1>
- <p className='w-1/2 bg-amber-500'>hi zena</p>
-     
+    <div className='w-full min-h-screen bg-gray-50 flex justify-center items-center'>
+     <Card/>
+
     </div>
   )
 }
