@@ -1,35 +1,40 @@
-import React from "react";
-import { Navigation } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
 import ImageComp from "../ImageComp/ImageComp";
 import InfoComp from "../InfoComp/InfoComp";
 import DescriptionComp from "../DescriptionComp/DescriptionComp";
-
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import SurpriseButton from "../SurpriseButton/SurpriseButton";
+import members from "../../assets/Data/Members";
+import { useState } from "react";
 
 const Card = () => {
-  let a = ["Slide 1", "Slide 2", "Slide 3", "Slide 4"];
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % members.length);
+  };
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + members.length) % members.length);
+  };
+const handleNavigateRandom=(num)=>{
+setCurrentIndex(num)
+}
   return (
-    <div className=" w-10/12 sm:w-4/5 md:w-3/4 lg:w-5/12 bg-white rounded-md shadow-md flex-col justify-center items-center  p-6">
-      <Swiper
-        // install Swiper modules
-        modules={[Navigation]}
-        spaceBetween={50}
-        slidesPerView={1}
-        navigation={{ clickable: true }}
-        onSwiper={(swiper) => console.log(swiper)}
-        onSlideChange={() => console.log("slide change")}
-        loop={true}
-      >
-        {a.map((item) => (
-          <SwiperSlide key={item}>
-           <ImageComp/>
-           <InfoComp/>
-           <DescriptionComp/>
-           </SwiperSlide>
-        ))}
-      </Swiper>
+    <div className="w-11/12 sm:w-4/5 md:w-3/4 lg:w-1/2 max-w-[600px] bg-white rounded-md shadow flex-col justify-center items-center p-6 transition-all duration-300 ease-in-out hover:shadow-lg">
+      <ImageComp img={members[currentIndex].image} />
+      <InfoComp
+        nameMember={members[currentIndex].name}
+        work={members[currentIndex].profession}
+      />
+      <DescriptionComp info={members[currentIndex].description} />
+      <div className="w-full flex justify-center items-center mt-3">
+        <button onClick={handlePrev}>
+          <FaChevronLeft className="text-indigo-800 cursor-pointer mr-3 hover:text-indigo-500 text-sm sm:text-lg" />
+        </button>
+        <button onClick={handleNext}>
+          <FaChevronRight className="text-indigo-800 cursor-pointer ml-3 hover:text-indigo-500 text-sm sm:text-lg" />
+        </button>
+      </div>
+
+      <SurpriseButton index={currentIndex} total={members.length} navigate={handleNavigateRandom} />
     </div>
   );
 };
